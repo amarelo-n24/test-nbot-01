@@ -16,6 +16,7 @@
     //$bot->replyText($event->getReplyToken(),'TextMessage');
     //replyTextMessage($bot,$event->getReplyToken(),'textmessage');
     //ButtonsTemplateを返信
+    /*
     replyButtonsTemplate($bot,
       $event->getReplyToken(),
       'お天気お知らせ - 今日の天気予報は晴れです',
@@ -29,6 +30,7 @@
       new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
         'webで見る','http://google.jp')
     );
+    */
     //イベントがPostbackEventクラスのインスタンスであれば、
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent){
       //テキストを返信し次のイベントの処理
