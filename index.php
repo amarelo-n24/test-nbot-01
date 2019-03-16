@@ -30,13 +30,24 @@
       new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
         'webで見る','http://google.jp')
     );
-    */
+
     //イベントがPostbackEventクラスのインスタンスであれば、
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent){
       //テキストを返信し次のイベントの処理
       replyTextMessage($bot,$event->getReplyToken(),'Postback受信「' . $event->getPostbackData() . '」');
       continue;
     }
+    */
+    //confirmテンプレートメッセージを返信
+    replyConfirmTemplate($bot,
+      $event->getReplyToken(),
+      'webで詳しく見ますか？',
+      'webで詳しく見ますか？',
+      new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+        '見る','http://google.jp'),
+      new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+        '見ない','ignore')
+    );
   }
 
   //テキストを返信。引数はLINEBOT、返信先、テキスト
@@ -65,6 +76,24 @@
       //ButttonTemplateBuilderの引数はタイトル、本文
       //画像URL、アクションの配列
       new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray)
+    );
+    $response = $bot->replyMessage($replyToken,$builder);
+    if(!$response->isSucceeded()){
+      error_log('Failed! '. $response->getHTTPStatus . ' ' . $response->getRawBody());
+    }
+  }
+
+  //Confirmテンプレートを返信。引数はLINEBot、返信先、代替テキスト
+  //本文、アクション（可変長引数）
+  function replyConfirmTemplate($bot,$replyToken,$altenativeText,$text,...$actions){
+    $actionArray = array();
+    foreach($actions as $value){
+      array_push($actionArray,$value);
+    }
+    $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+      $altenativeText,
+
+      new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder($text,$actionArray)
     );
     $response = $bot->replyMessage($replyToken,$builder);
     if(!$response->isSucceeded()){
