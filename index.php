@@ -29,6 +29,12 @@
       new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
         'webで見る','http://google.jp')
     );
+    //イベントがPostbackEventクラスのインスタンスであれば、
+    if ($event instanceof \LINE\LINEBot\Event\PostbackEvent){
+      //テキストを返信し次のイベントの処理
+      replyTextMessage($bot,$event->getReplyToken(),'Postback受信「' . $event->getPostbackData() . '」');
+      continue;
+    }
   }
 
   //テキストを返信。引数はLINEBOT、返信先、テキスト
