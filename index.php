@@ -26,7 +26,7 @@
         '明日の天気','tomorrow'),
       new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder(
         '週末の天気','weekend'),
-      new \LINE\LINEBot\TemplateActionBuilder\UrlTemplateActionBuilder(
+      new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
         'webで見る','http://google.jp')
     );
   }
