@@ -15,8 +15,8 @@
     //テキストを返信
     //$bot->replyText($event->getReplyToken(),'TextMessage');
     //replyTextMessage($bot,$event->getReplyToken(),'textmessage');
-    //BottonsTemplateを返信
-    replyBottonsTemplate($bot,
+    //ButtonsTemplateを返信
+    replyButtonsTemplate($bot,
       $event->getReplyToken(),
       'お天気お知らせ - 今日の天気予報は晴れです',
       'https://' . $_SERVER['HTTP_HOST'] . '/imgs/template.jpg',
@@ -43,8 +43,8 @@
     }
   }
 
-  //BottonsTemplateを返信。引数は、LINEBot、返信先、代替テキスト、画像URL、タイトル、本文、アクション（可変長引数）
-  function replyBottonsTemplate($bot,$replyToken,$altenativeText,$imageUrl,$title,$text, ...$actions){
+  //ButtonsTemplateを返信。引数は、LINEBot、返信先、代替テキスト、画像URL、タイトル、本文、アクション（可変長引数）
+  function replyButtonsTemplate($bot,$replyToken,$altenativeText,$imageUrl,$title,$text, ...$actions){
     //actionを格納する配列
     $actionArray = array();
     //アクションすべてを追加
@@ -56,7 +56,7 @@
       $altenativeText,
       //ButttonTemplateBuilderの引数はタイトル、本文
       //画像URL、アクションの配列
-      new \LINE\LINEBot\MessageBuilder\TemplateBuilder\BottonsTemplateBuilder($title,$text,$imageUrl,$actionArray)
+      new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray)
     );
     $response = $bot->replyMessage($replyToken,$builder);
     if(!$response->isSucceeded()){
